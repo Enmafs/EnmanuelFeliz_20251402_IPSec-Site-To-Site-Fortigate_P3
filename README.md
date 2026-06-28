@@ -15,18 +15,8 @@ Implementación de una VPN **IPSec Site-to-Site** entre dos dispositivos FortiGa
 
 ## 🗺️ Topología de Red
 
-```
-  [PC-A]              [ISP Router]              [PC-B]
-    |                  e0/0    e0/1                |
-14.2.10.0/24    20.25.1.x/30  20.25.2.x/30   14.2.20.0/24
-    |                  |          |                |
-[FGT-A]---port1---[20.25.1.1]  [20.25.2.1]---port1---[FGT-B]
- Sede Principal                                  Sucursal
- port2: 14.2.10.254                       port2: 14.2.20.254
+<img width="1479" height="326" alt="image" src="https://github.com/user-attachments/assets/be195309-92e2-4a40-a302-709be70f2c9b" />
 
-════════════════ TÚNEL IPSEC IKEv2 (DES/MD5) ════════════════
-         14.2.10.0/24  ←→  14.2.20.0/24
-```
 
 ---
 
