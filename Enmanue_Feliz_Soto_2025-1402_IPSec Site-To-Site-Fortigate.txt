@@ -1,0 +1,182 @@
+1. Script para FGT-A (Sede Principal - Rojo)
+
+config system interface
+    edit "port3"
+        set ip 0.0.0.0 0.0.0.0
+        set allowaccess ping
+    next
+    edit "port1"
+        set mode static
+        set ip 20.25.1.2 255.255.255.252
+        set allowaccess ping
+    next
+    edit "port2"
+        set mode static
+        set ip 14.2.10.254 255.255.255.0
+        set allowaccess ping
+    next
+end
+
+config router static
+    edit 1
+        set dst 0.0.0.0 0.0.0.0
+        set gateway 20.25.1.1
+        set device "port1"
+    next
+    edit 2
+        set dst 14.2.20.0 255.255.255.0
+        set device "VPN-To-FGT-B"
+    next
+end
+
+config vpn ipsec phase1-interface
+    edit "VPN-To-FGT-B"
+        set interface "port1"
+        set ike-version 2
+        set peertype any
+        set net-device disable
+        set proposal des-md5
+        set remote-gw 20.25.2.2
+        set psksecret "TuClaveSegura123!"
+    next
+end
+
+config vpn ipsec phase2-interface
+    edit "VPN-To-FGT-B-P2"
+        set phase1name "VPN-To-FGT-B"
+        set proposal des-md5
+        set src-subnet 14.2.10.0 255.255.255.0
+        set dst-subnet 14.2.20.0 255.255.255.0
+    next
+end
+
+config firewall policy
+    edit 1
+        set name "LAN_to_VPN"
+        set srcintf "port2"
+        set dstintf "VPN-To-FGT-B"
+        set srcaddr "all"
+        set dstaddr "all"
+        set action accept
+        set schedule "always"
+        set service "ALL"
+        set nat disable
+    next
+    edit 2
+        set name "VPN_to_LAN"
+        set srcintf "VPN-To-FGT-B"
+        set dstintf "port2"
+        set srcaddr "all"
+        set dstaddr "all"
+        set action accept
+        set schedule "always"
+        set service "ALL"
+        set nat disable
+    next
+end
+
+2. Script para FGT-B (Sucursal - Azul)
+
+config system interface
+    edit "port3"
+        set ip 0.0.0.0 0.0.0.0
+        set allowaccess ping
+    next
+    edit "port1"
+        set mode static
+        set ip 20.25.2.2 255.255.255.252
+        set allowaccess ping
+    next
+    edit "port2"
+        set mode static
+        set ip 14.2.20.254 255.255.255.0
+        set allowaccess ping
+    next
+end
+
+config router static
+    edit 1
+        set dst 0.0.0.0 0.0.0.0
+        set gateway 20.25.2.1
+        set device "port1"
+    next
+    edit 2
+        set dst 14.2.10.0 255.255.255.0
+        set device "VPN-To-FGT-A"
+    next
+end
+
+config vpn ipsec phase1-interface
+    edit "VPN-To-FGT-A"
+        set interface "port1"
+        set ike-version 2
+        set peertype any
+        set net-device disable
+        set proposal des-md5
+        set remote-gw 20.25.1.2
+        set psksecret "TuClaveSegura123!"
+    next
+end
+
+config vpn ipsec phase2-interface
+    edit "VPN-To-FGT-A-P2"
+        set phase1name "VPN-To-FGT-A"
+        set proposal des-md5
+        set src-subnet 14.2.20.0 255.255.255.0
+        set dst-subnet 14.2.10.0 255.255.255.0
+    next
+end
+
+config firewall policy
+    edit 1
+        set name "LAN_to_VPN"
+        set srcintf "port2"
+        set dstintf "VPN-To-FGT-A"
+        set srcaddr "all"
+        set dstaddr "all"
+        set action accept
+        set schedule "always"
+        set service "ALL"
+        set nat disable
+    next
+    edit 2
+        set name "VPN_to_LAN"
+        set srcintf "VPN-To-FGT-A"
+        set dstintf "port2"
+        set srcaddr "all"
+        set dstaddr "all"
+        set action accept
+        set schedule "always"
+        set service "ALL"
+        set nat disable
+    next
+end
+
+## Router Central - ISP
+
+enable
+configure terminal
+
+! Configuración del enlace hacia la Sede Principal (FGT-A Rojo)
+interface Ethernet0/0
+ description Link_to_FGT-A
+ ip address 20.25.1.1 255.255.255.252
+ no shutdown
+exit
+
+! Configuración del enlace hacia la Sucursal (FGT-B Azul)
+interface Ethernet0/1
+ description Link_to_FGT-B
+ ip address 20.25.2.1 255.255.255.252
+ no shutdown
+exit
+
+! Opcional: Si e0/2 está conectada a la nube (Net) para salida a Internet real
+interface Ethernet0/2
+ description Link_to_Internet
+ ip address dhcp
+ no shutdown
+exit
+
+end
+write memory
