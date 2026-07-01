@@ -3,7 +3,7 @@
 config system interface
     edit "port3"
         set ip 0.0.0.0 0.0.0.0
-        set allowaccess ping
+        set allowaccess ping hhtp https
     next
     edit "port1"
         set mode static
@@ -90,7 +90,7 @@ config system interface
     edit "port2"
         set mode static
         set ip 14.2.20.254 255.255.255.0
-        set allowaccess ping
+        set allowaccess ping hhtp https
     next
 end
 
