@@ -2,7 +2,7 @@
 
 config system interface
     edit "port3"
-        set ip 0.0.0.0 0.0.0.0
+        set mode dhcp
         set allowaccess ping http https
     next
     edit "port1"
@@ -79,8 +79,8 @@ end
 
 config system interface
     edit "port3"
-        set ip 0.0.0.0 0.0.0.0
-        set allowaccess ping
+        set mode dhcp
+        set allowaccess ping http https
     next
     edit "port1"
         set mode static
