@@ -1,4 +1,5 @@
-1. Script para FGT-A (Sede Principal - Rojo)
+# FGT-A - Sede Principal (Rojo)
+# Lab 10 - IPSec Site-to-Site - Practica 3
 
 config system interface
     edit "port3"
@@ -15,18 +16,6 @@ config system interface
         set mode static
         set ip 14.2.10.254 255.255.255.0
         set allowaccess ping
-    next
-end
-
-config router static
-    edit 1
-        set dst 0.0.0.0 0.0.0.0
-        set gateway 20.25.1.1
-        set device "port1"
-    next
-    edit 2
-        set dst 14.2.20.0 255.255.255.0
-        set device "VPN-To-FGT-B"
     next
 end
 
@@ -48,6 +37,18 @@ config vpn ipsec phase2-interface
         set proposal des-md5
         set src-subnet 14.2.10.0 255.255.255.0
         set dst-subnet 14.2.20.0 255.255.255.0
+    next
+end
+
+config router static
+    edit 1
+        set dst 0.0.0.0 0.0.0.0
+        set gateway 20.25.1.1
+        set device "port1"
+    next
+    edit 2
+        set dst 14.2.20.0 255.255.255.0
+        set device "VPN-To-FGT-B"
     next
 end
 
@@ -76,7 +77,8 @@ config firewall policy
     next
 end
 
-2. Script para FGT-B (Sucursal - Azul)
+# FGT-B - Sucursal (Azul)
+# Lab 10 - IPSec Site-to-Site - Practica 3
 
 config system interface
     edit "port3"
@@ -92,19 +94,7 @@ config system interface
     edit "port2"
         set mode static
         set ip 14.2.20.254 255.255.255.0
-        set allowaccess ping hhtp https
-    next
-end
-
-config router static
-    edit 1
-        set dst 0.0.0.0 0.0.0.0
-        set gateway 20.25.2.1
-        set device "port1"
-    next
-    edit 2
-        set dst 14.2.10.0 255.255.255.0
-        set device "VPN-To-FGT-A"
+        set allowaccess ping http https
     next
 end
 
@@ -126,6 +116,18 @@ config vpn ipsec phase2-interface
         set proposal des-md5
         set src-subnet 14.2.20.0 255.255.255.0
         set dst-subnet 14.2.10.0 255.255.255.0
+    next
+end
+
+config router static
+    edit 1
+        set dst 0.0.0.0 0.0.0.0
+        set gateway 20.25.2.1
+        set device "port1"
+    next
+    edit 2
+        set dst 14.2.10.0 255.255.255.0
+        set device "VPN-To-FGT-A"
     next
 end
 
@@ -154,26 +156,27 @@ config firewall policy
     next
 end
 
-## Router Central - ISP
+! Router Central - ISP
+! Lab 10 - IPSec Site-to-Site - Practica 3
 
 enable
 configure terminal
 
-! Configuración del enlace hacia la Sede Principal (FGT-A Rojo)
+! Enlace hacia la Sede Principal (FGT-A Rojo)
 interface Ethernet0/0
  description Link_to_FGT-A
  ip address 20.25.1.1 255.255.255.252
  no shutdown
 exit
 
-! Configuración del enlace hacia la Sucursal (FGT-B Azul)
+! Enlace hacia la Sucursal (FGT-B Azul)
 interface Ethernet0/1
  description Link_to_FGT-B
  ip address 20.25.2.1 255.255.255.252
  no shutdown
 exit
 
-! Opcional: Si e0/2 está conectada a la nube (Net) para salida a Internet real
+! Opcional: salida a Internet real via Cloud
 interface Ethernet0/2
  description Link_to_Internet
  ip address dhcp
