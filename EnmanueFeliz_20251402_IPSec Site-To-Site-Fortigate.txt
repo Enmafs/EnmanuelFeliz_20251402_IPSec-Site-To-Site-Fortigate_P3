@@ -4,6 +4,7 @@ config system interface
     edit "port3"
         set mode dhcp
         set allowaccess ping http https
+        set defaultgw disable
     next
     edit "port1"
         set mode static
@@ -81,6 +82,7 @@ config system interface
     edit "port3"
         set mode dhcp
         set allowaccess ping http https
+        set defaultgw disable
     next
     edit "port1"
         set mode static
