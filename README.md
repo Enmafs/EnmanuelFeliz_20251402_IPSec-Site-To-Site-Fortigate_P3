@@ -62,16 +62,13 @@ Implementación de una VPN **IPSec Site-to-Site** entre dos dispositivos FortiGa
 ## 🖥️ Evidencias de Configuración
 
 ### Figura 1 — FGT-A: IPSec Phase 1 (VPN-To-FGT-B)
-![Phase 1 FGT-A](screenshots/lab10_phase1_fgta.png)
-
-### Figura 2 — FGT-A: IPSec Phase 2 (Selector de Tráfico)
-![Phase 2 FGT-A](screenshots/lab10_phase2_fgta.png)
+<img width="1526" height="825" alt="image" src="https://github.com/user-attachments/assets/21b5d6b7-1224-4705-aec6-561f2a50677c" />
 
 ### Figura 3 — FGT-A: Firewall Policies (LAN ↔ VPN)
-![Policies FGT-A](screenshots/lab10_policy_fgta.png)
+<img width="1273" height="387" alt="image" src="https://github.com/user-attachments/assets/04ec9cd5-bd57-4774-b49b-a29e9ba45fc2" />
 
 ### Figura 4 — Rutas Estáticas + Topología
-![Routes y Topología](screenshots/lab10_routes_topology.png)
+<img width="1269" height="547" alt="image" src="https://github.com/user-attachments/assets/55c37533-3300-4c3e-a68a-bab759fc178b" />
 
 ---
 
