@@ -246,7 +246,7 @@ execute ping 14.2.20.254
 |---------|--------|
 | Repositorio | [EnmanuelFelizSoto_20251402_VPN-Site-To-Site-Fortigate](https://github.com/Enmafs/EnmanuelFelizSoto_20251402_VPN-Site-To-Site-Fortigate) |
 | Repositorio padre (NetSec) | [Enmafs/NetSec](https://github.com/Enmafs/NetSec) |
-| Video demostrativo | 🎬 [Aquí](https://github.com/Enmafs/NetSec) |
+| Video demostrativo | 🎬 [Aquí](https://youtu.be/RCI8Qt6YqPU) |
 
 ---
 
